@@ -13,6 +13,14 @@ bool confrontaCandidati(const Candidato& a, const Candidato& b) {
     return a.nome < b.nome;
 }
 
+void aggiornaPosizioni(std::vector<Candidato>& elenco){
+    for(int i = 0; i <= NUM; i++){
+        Candidato candidato = elenco[i];
+        //std::cout << candidato.nome << " | " << i << "\n";
+        candidato.posizione = i + 1;
+    }
+}
+
 void inserisciCandidato(std::vector<Candidato>& elenco, const Candidato& nuovoCandidato) {
     auto posizioneInserimento = std::lower_bound(elenco.begin(), elenco.end(), nuovoCandidato, confrontaCandidati);
     std::cout << " posizione inserimento\n" << nuovoCandidato.posizione << std::endl;
@@ -24,18 +32,15 @@ void aggiungiCandidato(std::vector<Candidato>& elenco){
     std::cout << "Inserisci nome candidato: ";
     std::cin >> nomeCandidato;
     inserisciCandidato(elenco, {nomeCandidato, NUM + 1});
-    aggiornaPosizioni(elenco);
+    
 }
 
-void aggiornaPosizioni(std::vector<Candidato>& elenco){
+
+
+void stampaElenco( std::vector<Candidato>& elenco) { // const
     for(int i = 0; i <= NUM; i++){
-        std::cout << elenco[i];
-    }
-}
-
-void stampaElenco(const std::vector<Candidato>& elenco) {
-    for (const auto& candidato : elenco) {
-        std::cout << "Posizione: " << candidato.posizione << ", Nome: " << candidato.nome << std::endl;
+        Candidato candidato = elenco[i];
+        std::cout << "Posizione: " << i + 1 << ", Nome: " << candidato.nome << std::endl;
     }
 }
 
@@ -69,6 +74,7 @@ int main() {
         }
         if(scelta == 2){
             aggiungiCandidato(elenco);
+            aggiornaPosizioni(elenco);
         }
         if(scelta == 0){
             break;
